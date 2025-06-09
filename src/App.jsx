@@ -1,28 +1,31 @@
+import { useRef, useEffect, useState } from "react";
 import { CurrenciesBox } from "./layouts/CurrenciesBox";
+import { getCurrencies } from "./api/getCurrencies";
+import { mapCurrencies } from "./utils/mapCurrencies";
 import "./App.css";
-import { useRef } from "react";
 
 function App() {
     const ref = useRef(null);
+    const [currencies, setCurrencies] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const data = await getCurrencies();
+
+            const mappedData = mapCurrencies(data);
+
+            if (mappedData) setCurrencies(mappedData);
+        })();
+    }, []);
 
     return (
         <main>
             <div className="main__wrapper">
                 <h1>Currencies app</h1>
-                <CurrenciesBox
-                    prefix="from"
-                    value={0}
-                    options={["Option 1", "Option 2", "Option 3"]}
-                    onSelect={() => {}}
-                >
+                <CurrenciesBox prefix="from" value={0} options={currencies} onSelect={() => {}}>
                     <input ref={ref} className="currencies-input" type="number" />
                 </CurrenciesBox>
-                <CurrenciesBox
-                    prefix="to"
-                    value={0}
-                    options={["currency 1", "currency 2", "currency 3"]}
-                    onSelect={() => {}}
-                >
+                <CurrenciesBox prefix="to" value={0} options={currencies} onSelect={() => {}}>
                     {0}
                 </CurrenciesBox>
             </div>
