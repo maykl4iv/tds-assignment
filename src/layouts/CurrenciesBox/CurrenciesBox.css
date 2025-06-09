@@ -1,0 +1,16 @@
+.currencies-box__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.currencies-box__prefix {
+    width: 50px;
+    text-align: right;
+    margin-right: 4px;
+}
+
+.currencies-box__divider {
+    margin-right: 4px;
+    margin-left: 4px;
+}
