@@ -1,11 +1,10 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-export function Dropdown({ options, onSelect, placeholder = "Select..." }) {
+export function Dropdown({ options, onSelect, selected, placeholder = "Select..." }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(null);
 
     const handleSelect = (option) => {
-        setSelected(option);
         onSelect(option);
         setIsOpen(false);
     };
@@ -43,7 +42,7 @@ export function Dropdown({ options, onSelect, placeholder = "Select..." }) {
                 >
                     {options.map((option) => (
                         <li
-                            key={option}
+                            key={uuidv4()}
                             onClick={() => handleSelect(option)}
                             style={{
                                 padding: "10px",

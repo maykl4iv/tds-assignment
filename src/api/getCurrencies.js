@@ -9,7 +9,7 @@ export const getCurrencies = async () => {
         }
 
         const data = await response.json();
-        console.log("data :>> ", data);
+
         return data;
     } catch (error) {
         throw new Error(`Currency API error: ${error}`);
