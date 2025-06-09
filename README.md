@@ -1,12 +1,23 @@
-# React + Vite
+# Currencies exchange assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I did the assignment using simple react + vite setup.
+Prioritized speed so added minimum amount of libraries. Only those that were necessary.
+Committed gradually as I go. Should pretty easy to understand what I was doing here.
 
-Currently, two official plugins are available:
+## On styling
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Even though it was not necessary I wanted to add shadcn-ui and tailwind/css and use some of the builded dropdowns.
+I had problems with node, tried to downgrade to older version but still had problems in initializing.
+Didn't want to spend to much time on it as I really wanted to finish in 2 hours so it is pretty fair with others.
+I used custom Dropdown which I found in one of my testing projects. Hope that's ok.
+useDebounce hook is also from my test project, hope that's fine too.
 
-## Expanding the ESLint configuration
+## Run
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+To run you just need:
+
+npm install
+npm run dev
+
+But you need to also have env with the variable: VITE_API_KEY
+Please get the key from the website or if you want to use mine I will attach it in the email.
