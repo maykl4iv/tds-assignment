@@ -1,12 +1,13 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CurrenciesBox } from "./layouts/CurrenciesBox";
 import { getCurrencies } from "./api/getCurrencies";
 import { getConverted } from "./api/getConverted";
 import { mapCurrencies } from "./utils/mapCurrencies";
+import { useDebounce } from "./hooks/useDebounce";
 import "./App.css";
 
 function App() {
-    const ref = useRef(null);
+    const [amount, setAmount] = useState(0);
     const [currencies, setCurrencies] = useState([]);
     const [from, setFrom] = useState(null);
     const [to, setTo] = useState(null);
@@ -22,6 +23,18 @@ function App() {
         })();
     }, []);
 
+    const handleConvert = useCallback(async () => {
+        if (!from && !to && !amount) return;
+
+        const data = await getConverted({ from, to, amount });
+        const value = +data.value.toFixed(2);
+        setConverted(value);
+    }, [amount, from, to]);
+
+    const debouncedHandleConvert = useDebounce(handleConvert, 500);
+
+    useEffect(() => debouncedHandleConvert(), [debouncedHandleConvert]);
+
     const handleFromSelect = (option) => {
         setFrom(option);
     };
@@ -30,10 +43,8 @@ function App() {
         setTo(option);
     };
 
-    const handleConvert = async () => {
-        const data = await getConverted({ from, to, amount: +ref.current.value });
-        const value = +data.value.toFixed(2);
-        setConverted(value);
+    const handleChange = (event) => {
+        setAmount(+event.target.value);
     };
 
     return (
@@ -46,7 +57,12 @@ function App() {
                     options={currencies}
                     onSelect={handleFromSelect}
                 >
-                    <input ref={ref} className="currencies-input" type="number" />
+                    <input
+                        value={amount}
+                        onChange={handleChange}
+                        className="currencies-input"
+                        type="number"
+                    />
                 </CurrenciesBox>
                 <CurrenciesBox
                     prefix="to"
@@ -56,7 +72,6 @@ function App() {
                 >
                     <span>{converted}</span>
                 </CurrenciesBox>
-                <button onClick={handleConvert}>Convert</button>
             </div>
         </main>
     );
